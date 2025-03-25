@@ -24,13 +24,27 @@ gha_dir <- file.path("/github/workspace")
 
 packages <- args[4]
 strip <- args[5]
+dependencies <- args[6]
 
+if (is.character(dependencies)) {
+  dependencies <- switch(dependencies,
+                         "TRUE" = TRUE,
+                         "FALSE" = FALSE,
+                         "NA" = NA,
+                         FALSE)
+} else if (is.null(dependencies)) {
+  dependencies <- FALSE
+} else if (is.logical(dependencies)) {
+  dependencies <- as.logical(dependencies)
+}
+
+compress <- as.logical(compress)
 packages <- strsplit(packages, "[[:space:],]+")[[1]]
 strip <- strsplit(strip, "[[:space:],]+")[[1]]
 if (is.character(strip) && length(strip) == 1 && strip == "NULL") strip <- NULL
 
 cat("\nArgs:\n")
-str(list(image_path = image_path, repo_path = repo_path, packages = packages, strip = strip))
+str(list(image_path = image_path, repo_path = repo_path, packages = packages, strip = strip, dependencies = dependencies))
 
 if (!require("withr", character.only = TRUE, quietly = TRUE)) install.packages("withr")
 
@@ -46,7 +60,7 @@ withr::local_envvar(list(
 pak::pak(c("r-wasm/rwasm"))
 
 message("\n\nAdding packages:\n", paste("* ", packages, sep = "", collapse = "\n"))
-rwasm::add_pkg(packages, repo_dir = repo_path, compress = compress)
+rwasm::add_pkg(packages, repo_dir = repo_path, compress = compress, dependencies = dependencies)
 
 message("\n\nMaking library")
 rwasm::make_vfs_library(out_dir = image_path, repo_dir = repo_path, strip = strip, compress = compress)
