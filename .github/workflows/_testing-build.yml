@@ -40,8 +40,8 @@ jobs:
           packages: cran/cli@3.6.5
           image-path: _image
           repo-path: _repo
-          webr-image: ghcr.io/r-wasm/webr:v0.5.4
-      - name: Verify repo built for webR v0.5.4 exists
+          webr-image: ghcr.io/r-wasm/webr:v0.5.9
+      - name: Verify repo built for webR v0.5.9 exists
         shell: Rscript {0}
         run: |
           print(dir("_repo", recursive = TRUE))
