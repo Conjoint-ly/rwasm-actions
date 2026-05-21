@@ -16,8 +16,7 @@ This action uses the [rwasm](https://r-wasm.github.io/rwasm/) R package to build
 
 ## Steps
 
-1. Install latest `r-wasm/rwasm`
-2. Create the repo using `{rwasm}`
+1. Create the repo using `{rwasm}`
 2. Create the WebAssembly file image using `{rwasm}`
 3. Copy files to `repo-path` and `image-path` directory
 

@@ -42,9 +42,6 @@ withr::local_envvar(list(
   "GITHUB_PAT" = Sys.getenv("GITHUB_PAT", Sys.getenv("GITHUB_TOKEN"))
 ))
 
-# Install rwasm (after PAT is set)
-pak::pak(c("r-wasm/rwasm"))
-
 message("\n\nAdding packages:\n", paste("* ", packages, sep = "", collapse = "\n"))
 rwasm::add_pkg(packages, repo_dir = repo_path, compress = compress)
 
