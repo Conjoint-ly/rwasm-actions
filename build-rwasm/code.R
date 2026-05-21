@@ -49,7 +49,8 @@ message("\n\nMaking library")
 rwasm::make_vfs_library(out_dir = image_path, repo_dir = repo_path, strip = strip, compress = compress)
 
 if (compress) {
-  uncompressed <- list.files(image_path, pattern = "\\.(data|js\\.metadata)$", full.names = TRUE)
+  # We have created a VFS image of type .data.gz and .js.metadata, remove the uncompressed .data file
+  uncompressed <- list.files(image_path, pattern = "\\.data$", full.names = TRUE)
   if (length(uncompressed)) {
     message("\n\nRemoving uncompressed VFS files:\n", paste("* ", uncompressed, sep = "", collapse = "\n"))
     file.remove(uncompressed)
