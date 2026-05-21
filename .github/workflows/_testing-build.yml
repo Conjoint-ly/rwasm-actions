@@ -18,6 +18,7 @@ jobs:
           packages: cli
           image-path: _image
           repo-path: _repo
+          compress: false
       - name: Verify repo exists
         shell: Rscript {0}
         run: |
@@ -40,6 +41,7 @@ jobs:
           packages: cran/cli@3.6.5
           image-path: _image
           repo-path: _repo
+          compress: false
           webr-image: ghcr.io/r-wasm/webr:v0.5.9
       - name: Verify repo built for webR v0.5.9 exists
         shell: Rscript {0}
@@ -56,7 +58,6 @@ jobs:
           packages: cli
           image-path: _image
           repo-path: _repo
-          compress: true
       - name: Verify repo built with compressed images exists
         run: |
           [ -n "$(find _repo -name '*.tgz')" ]
