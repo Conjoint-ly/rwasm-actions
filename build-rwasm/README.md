@@ -42,7 +42,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build wasm packages
-      uses: r-wasm/actions/build-rwasm@v2
+      uses: r-wasm/actions/build-rwasm@v3
       with:
         packages: |
           cli

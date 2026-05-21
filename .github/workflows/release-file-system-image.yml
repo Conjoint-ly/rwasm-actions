@@ -4,7 +4,7 @@ on:
   # Ex:
   # jobs:
   #   build:
-  #     uses: r-wasm/actions/.github/workflows/build-file-system-image.yml@v2
+  #     uses: r-wasm/actions/.github/workflows/build-file-system-image.yml@v3
   workflow_call:
     inputs:
       packages:
@@ -62,7 +62,7 @@ jobs:
       - name: Checkout r-wasm/actions repository
         uses: actions/checkout@v4
         with:
-          ref: v2
+          ref: v3
           repository: r-wasm/actions
           token: ${{ secrets.GITHUB_TOKEN }}
           path: .actions
