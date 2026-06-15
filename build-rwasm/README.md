@@ -12,12 +12,11 @@ This action uses the [rwasm](https://r-wasm.github.io/rwasm/) R package to build
 * **image-path** (`.`) - Directory where the R package library filesystem image should be saved.
 * **strip** (`NULL`) - A set of [directories to remove](https://r-wasm.github.io/rwasm/reference/make_library.html#details) when building the WebAssembly R package library image, or `NULL` to remove nothing. To achieve a smaller bundle size, it is recommended to set `strip` to `"demo, doc, examples, help, html, include, tests, vignette"`.
 * **webr-image** (`ghcr.io/r-wasm/webr:main`) - Docker container image for webR development environment. Switch `main` with a [tagged webR container version](https://github.com/r-wasm/webr/pkgs/container/webr) to use a stable release.
-* **compress** (`false`) - Compress Emscripten VFS images. Defaults to `false`. Loading compressed VFS images requires at least version 0.4.1 of webR.
+* **compress** (`true`) - Compress Emscripten VFS images. Defaults to `true`. Loading compressed VFS images requires at least version 0.4.1 of webR.
 
 ## Steps
 
-1. Install latest `r-wasm/rwasm`
-2. Create the repo using `{rwasm}`
+1. Create the repo using `{rwasm}`
 2. Create the WebAssembly file image using `{rwasm}`
 3. Copy files to `repo-path` and `image-path` directory
 
@@ -33,8 +32,7 @@ jobs:
     - name: Build wasm image
       uses: ./build-file-system-image
 
-    # Use `library.data` and `library.js.metadata` files in `./_site` directory
-    # to create a GitHub Pages site.
+    # Use file system image in `./_site` directory to create a GitHub Pages site.
 ```
 
 ```yaml
@@ -44,7 +42,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build wasm packages
-      uses: r-wasm/actions/build-rwasm@v2
+      uses: r-wasm/actions/build-rwasm@v3
       with:
         packages: |
           cli

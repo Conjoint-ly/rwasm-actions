@@ -56,20 +56,17 @@ withr::local_envvar(list(
   "GITHUB_PAT" = Sys.getenv("GITHUB_PAT", Sys.getenv("GITHUB_TOKEN"))
 ))
 
-# Workaround for pak res_one_row_df bug with custom repos (r-lib/pak#804): use devel pak
-install.packages("pak", repos = sprintf(
-  "https://r-lib.github.io/p/pak/%s/%s/%s/%s",
-  "devel", .Platform$pkgType, R.Version()$os, R.Version()$arch
-))
-
-# Drop any stale/corrupt pak private library so pak rebuilds it cleanly
-unlink(file.path(.libPaths()[1], "pak", "library"), recursive = TRUE, force = TRUE)
-
-# Install rwasm (after PAT is set)
-pak::pak(c("Conjoint-ly/rwasm"))
-
 message("\n\nAdding packages:\n", paste("* ", packages, sep = "", collapse = "\n"))
 rwasm::add_pkg(packages, repo_dir = repo_path, compress = compress, dependencies = dependencies)
 
 message("\n\nMaking library")
 rwasm::make_vfs_library(out_dir = image_path, repo_dir = repo_path, strip = strip, compress = compress)
+
+if (compress) {
+  # We have created a VFS image of type .data.gz and .js.metadata, remove the uncompressed .data file
+  uncompressed <- list.files(image_path, pattern = "\\.data$", full.names = TRUE)
+  if (length(uncompressed)) {
+    message("\n\nRemoving uncompressed VFS files:\n", paste("* ", uncompressed, sep = "", collapse = "\n"))
+    file.remove(uncompressed)
+  }
+}

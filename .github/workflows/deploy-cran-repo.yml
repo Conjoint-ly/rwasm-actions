@@ -4,7 +4,7 @@ on:
   # Ex:
   # jobs:
   #   build:
-  #     uses: r-wasm/actions/.github/workflows/deploy-cran-repo.yml@v2
+  #     uses: r-wasm/actions/.github/workflows/deploy-cran-repo.yml@v3
   workflow_call:
     inputs:
       # !! ./build-cran-repo/action.yml inputs!!
@@ -19,8 +19,8 @@ on:
         type: string
         required: false
       compress:
-        description: Compress Emscripten VFS images. Defaults to `false`.
-        default: false
+        description: Compress Emscripten VFS images. Defaults to `true`.
+        default: true
         type: boolean
         required: false
 
@@ -57,7 +57,7 @@ jobs:
       - name: Checkout r-wasm/actions repository
         uses: actions/checkout@v4
         with:
-          ref: v2
+          ref: v3
           repository: r-wasm/actions
           token: ${{ secrets.GITHUB_TOKEN }}
           path: .actions

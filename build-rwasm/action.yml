@@ -24,8 +24,8 @@ inputs:
     type: string
     required: false
   compress:
-    description: Compress Emscripten VFS images. Defaults to `false`.
-    default: false
+    description: Compress Emscripten VFS images. Defaults to `true`.
+    default: true
     type: boolean
     required: false
   dependencies:
