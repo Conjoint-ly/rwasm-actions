@@ -62,6 +62,9 @@ install.packages("pak", repos = sprintf(
   "devel", .Platform$pkgType, R.Version()$os, R.Version()$arch
 ))
 
+# Drop any stale/corrupt pak private library so pak rebuilds it cleanly
+unlink(file.path(.libPaths()[1], "pak", "library"), recursive = TRUE, force = TRUE)
+
 # Install rwasm (after PAT is set)
 pak::pak(c("Conjoint-ly/rwasm"))
 
