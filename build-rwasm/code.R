@@ -56,6 +56,12 @@ withr::local_envvar(list(
   "GITHUB_PAT" = Sys.getenv("GITHUB_PAT", Sys.getenv("GITHUB_TOKEN"))
 ))
 
+# Workaround for pak res_one_row_df bug with custom repos (r-lib/pak#804): use devel pak
+install.packages("pak", repos = sprintf(
+  "https://r-lib.github.io/p/pak/%s/%s/%s/%s",
+  "devel", .Platform$pkgType, R.Version()$os, R.Version()$arch
+))
+
 # Install rwasm (after PAT is set)
 pak::pak(c("Conjoint-ly/rwasm"))
 
